@@ -1,0 +1,51 @@
+{{!-- HEADER --}}
+<div class="row mb-2">
+  <div class="col-10 d-flex">
+    <h1>Listar categorias</h1>
+  </div>
+  <div class="col-2 d-flex justify-content-end align-items-center">
+    <a href="categoria/form" class="btn btn-primary">
+      Nova categoria
+    </a>
+  </div>
+</div>
+
+{{!-- FILTRO --}}
+<div class="container pt-3 mb-4 border rounded bg-light">
+  <h4>Filtro</h4>
+  <div class="row mb-4">
+    <form class="d-flex" action="/admin/categorias" method="get">
+      <input class="form-control me-2" name='busca' type="search" placeholder="Nome da Categoria"
+        aria-label="Buscar categoria">
+      <button class="btn btn-outline-success" type="submit">Buscar</button>
+    </form>
+  </div>
+</div>
+
+{{!-- CORPO --}}
+<div class="row"></div>
+{{#each categorias}}
+<div class="card mt-4">
+  <div class="card-body">
+    <small>{{this.date}}</small>
+    <hr>
+    <h2><strong>{{this.nome}}</strong></h2>
+    <small>Slug: {{slug}}</small>
+    <hr>
+    <div class="row">
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="/admin/categorias/delete/{{_id}}">
+          <button class="btn btn-danger btn-sm mt-2">Delete</button>
+        </a>
+        <a href="/admin/categorias/edit/{{_id}}">
+          <button class="btn btn-primary btn-sm mt-2">Editar</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{{else}}
+<div class="mt-4">
+  <h4>Nenhuma categoria cadastrada</h4>
+</div>
+{{/each}}

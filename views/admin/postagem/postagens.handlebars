@@ -1,0 +1,64 @@
+{{!-- HEADER --}}
+<div class="row mb-2">
+  <div class="col-10 d-flex">
+    <h1>Listar postagens</h1>
+  </div>
+  <div class="col-2 d-flex justify-content-end align-items-center">
+    <a href="/postagem/form" class="btn btn-success">
+      Nova Postagem
+    </a>
+  </div>
+</div>
+
+
+{{!-- FILTRO --}}
+<div class="container p-3 mb-4 shadow-sm border rounded bg-light">
+  <h4>Filtros</h4>
+  <div class="row mb-4">
+    <div class="col-sm">
+      <form class="d-flex" action="/admin/postagens" method="get">
+        <input class="form-control me-2 " name='busca' type="search" placeholder="Título da Postagem"
+          aria-label="Buscar postagem">
+        <button class="btn btn-outline-success" type="submit">Buscar</button>
+      </form>
+    </div>
+    <div class="col-sm">
+      <form class="d-flex" action="/admin/postagens" method="get">
+        <input class="form-control me-2" name='filtro' type="search" placeholder="Categoria"
+          aria-label="Buscar postagem">
+        <button class="btn btn-outline-success" type="submit">Buscar</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+{{!-- CORPO --}}
+{{#each postagens}}
+<div class="card mb-4 shadow-sm">
+  <div class="card-body">
+    <small>{{this.data}}</small>
+    <hr>
+    <h2>{{this.titulo}}</h2>
+    <small>{{slug}}</small>
+    <p class="lead">{{descricao}}</p>
+    <hr>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <a href="/postagem/delete/{{_id}}">
+        <button class="btn btn-danger btn-sm mt-2">Delete</button>
+      </a>
+      <a href="/postagem/form/{{_id}}">
+        <button class="btn btn-primary btn-sm mt-2">Editar</button>
+      </a>
+
+    </div>
+  </div>
+</div>
+{{else}}
+<div class="mt-4">
+  <h4>Nenhuma postagem cadastrada</h4>
+</div>
+{{/each}}
+
+<br><br>
