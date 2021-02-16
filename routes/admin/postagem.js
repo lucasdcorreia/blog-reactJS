@@ -8,7 +8,7 @@ const Categoria = require('../../models/Categoria')
 const { eAdmin } = require('../../helpers/eAdmin')
 
 // Listar Postagens
-PostagemRouter.get('/', eAdmin, (req, res) => {
+PostagemRouter.get('/', (req, res) => {
   Postagem.find().lean().exec((err, postagens) => {
     if (err) {
       res.redirect('/postagem')
@@ -18,7 +18,7 @@ PostagemRouter.get('/', eAdmin, (req, res) => {
 })
 
 // Formulário
-PostagemRouter.get('/form/:id?', eAdmin, (req, res) => {
+PostagemRouter.get('/form/:id?', (req, res) => {
   if (req.params.id) {
     Postagem.findOne({ _id: req.params.id }).populate("categoria").lean().exec((err, postagem) => {
       if (err) {
@@ -49,7 +49,7 @@ PostagemRouter.get('/form/:id?', eAdmin, (req, res) => {
 
 // Ações
 // CREATE
-PostagemRouter.post('/nova', eAdmin, (req, res) => {
+PostagemRouter.post('/nova', (req, res) => {
   var erros = []
   if (!req.body.titulo || typeof req.body.titulo == undefined || req.body.titulo == null) {
     erros.push({ texto: 'Título inválido' })
@@ -88,7 +88,7 @@ PostagemRouter.post('/nova', eAdmin, (req, res) => {
 })
 
 // UPDATE
-PostagemRouter.post('/update', eAdmin, (req, res) => {
+PostagemRouter.post('/update', (req, res) => {
   Postagem.updateOne({ _id: req.body.id }, {
     titulo: req.body.titulo,
     slug: req.body.slug,
@@ -105,7 +105,7 @@ PostagemRouter.post('/update', eAdmin, (req, res) => {
 })
 
 // DELETE
-PostagemRouter.get('/delete/:id', eAdmin, (req, res) => {
+PostagemRouter.get('/delete/:id', (req, res) => {
   Postagem.deleteOne({ _id: req.params.id }).then(() => {
     req.flash('success_msg', 'Postagem excluída com sucesso.')
     res.redirect('/postagem')

@@ -9,14 +9,11 @@ const Usuario = require('../../models/Usuario')
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
 
-
-
-
 // Listar usuarios
 UsuarioRouter.get('/usuarios', (req, res) => {
   Usuario.find().lean().exec((err, usuarios) => {
     if (err) {
-
+      req.flash('error_msg', 'Não foi possível carregar usuários.')
     }
     res.render('admin/usuario/usuarios', { usuarios: usuarios })
   })
@@ -92,8 +89,14 @@ UsuarioRouter.get('/update', (req, res) => {
 })
 
 // DELETE
-UsuarioRouter.get('/delete', (req, res) => {
-
+UsuarioRouter.get('/delete/:id', (req, res) => {
+  Usuario.deleteOne({ _id: req.params.id }).then(() => {
+    req.flash('success_msg', 'Usuário removido com sucesso.')
+    res.redirect('/usuario/usuarios')
+  }).catch((err) => {
+    req.flash('error_msg', 'Erro ao remover usuário')
+    res.redirect('/usuario/usuarios')
+  })
 })
 
 // LOGIN
